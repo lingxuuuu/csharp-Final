@@ -1,0 +1,60 @@
+﻿@*ViewBag.User = _context
+    .Users
+    .Find(userId);
+
+    ViewBag.Activity = _context
+    .Activities
+    .Include(activity => activity.PlanedBy)
+    .Include(activity => activity.Participants)
+    .ToList();*@
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2>Welcome, @ViewBag.User.FirstName! </h2>
+
+<table class="table table-striped">
+    <tr>>
+        <th>Actvity</th>
+        <th>Date and Time</th>
+        <th>Duration</th>
+        <th>Event Coordinator</th>
+        <th>No. of Participants</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (Activity activity in ViewBag.Activity)
+    {
+        <tr>
+            <td><a asp-action="ActivityPage" asp-route-id="@activity.ActivityId">@activity.Title</a></td>
+            <td>@activity.Date.ToString("MM/dd/yyyy") at @activity.Time</td>
+            <td>@activity.Duration</td>
+            <td>@activity.PlanedBy.FirstName</td>
+            <td>@activity.Participants.Count</td>
+
+            <td>
+                @if (activity.PlanedBy.UserId == ViewBag.User.UserId)
+                {
+                    @*Can delete the activity*@
+                    <form asp-action="DeleteActivity" asp-route-id=@activity.ActivityId method="post">
+                        <button>Delete</button>
+                    </form>
+                }
+                @*If current user going this activity*@
+                else if (activity.Participants.Any(participant => participant.UserId == ViewBag.User.UserId))
+                {
+                <form asp-action="RemoveParticipant" asp-route-id="@activity.ActivityId" method="post">
+                    <button>Leave</button>
+                </form>
+                }
+                else
+                {
+                <form asp-action="AddParticipant" asp-route-id="@activity.ActivityId" method="post">
+                    <button>Join</button>
+                </form>
+                }
+            </td>
+        </tr>
+    }
+
+   <span><a asp-action="NewActivityPage">Add New Activity</a></span>

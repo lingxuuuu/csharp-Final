@@ -1,0 +1,68 @@
+@* ViewBag.activity = _context
+    .Activities
+    //one to many relationship: each activity I find, I want to return the movie that is PlanedBy
+    .Include(activity => activity.PlanedBy)
+    //populate the Rsvps first
+    .Include(activity => activity.Participants)
+    //and then populate the users
+    .ThenInclude(activity => activity.User)
+    .FirstOrDefault(activity => activity.ActivityId == id);
+
+    ViewBag.User = _context
+    .Users
+    .Find(HttpContext.Session.GetInt32("UserId"));*@
+
+
+@{
+    Activity activity = ViewBag.Activity;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Hello!</title>
+</head>
+
+<body>
+
+
+    <h4>@ViewBag.Activity.Title</h4>
+
+    <p>Event Coordinator: @ViewBag.Activity.PlanedBy.FirstName</p>
+    <hr>
+    <p>Date: @ViewBag.Activity.Date.ToString("MM/dd/yyyy")</p>
+    <p>Description:@ViewBag.Activity.Description</p>
+    <p>Participants</p>
+    <ul>
+        @foreach (Participant participant in @ViewBag.Activity.Participants)
+        {
+            <li>@participant.User.FirstName</li>
+        }
+    </ul>
+    <hr>
+
+    @if (activity.PlanedBy.UserId == ViewBag.User.UserId)
+    {
+        @*Can delete the activity*@
+        <form asp-action="DeleteActivity" asp-route-id=@activity.ActivityId method="post">
+            <button>Delete</button>
+        </form>
+    }
+    @*If current user going this activity*@
+    else if (activity.Participants.Any(participant => participant.UserId == ViewBag.User.UserId))
+    {
+        <form asp-action="RemoveParticipant" asp-route-id="@activity.ActivityId" method="post">
+            <button>Leave</button>
+        </form>
+    }
+    else
+    {
+        <form asp-action="AddParticipant" asp-route-id="@activity.ActivityId" method="post">
+            <button>Join</button>
+        </form>
+    }
+</body>
+
+</html>
