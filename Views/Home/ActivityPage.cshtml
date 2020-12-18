@@ -33,8 +33,8 @@
     <p>Event Coordinator: @ViewBag.Activity.PlanedBy.FirstName</p>
     <hr>
     <p>Date: @ViewBag.Activity.Date.ToString("MM/dd/yyyy")</p>
-    <p>Description:@ViewBag.Activity.Description</p>
-    <p>Participants</p>
+    <p>Description: @ViewBag.Activity.Description</p>
+    <p>Participants: </p>
     <ul>
         @foreach (Participant participant in @ViewBag.Activity.Participants)
         {

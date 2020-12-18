@@ -8,9 +8,19 @@
     .Include(activity => activity.Participants)
     .ToList();*@
 
-@{
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Hello!</title>
+    @{
     ViewData["Title"] = "Dashboard";
-}
+    }
+</head>
+
+<body>
 
 <h2>Welcome, @ViewBag.User.FirstName! </h2>
 
@@ -57,4 +67,8 @@
         </tr>
     }
 
-   <span><a asp-action="NewActivityPage">Add New Activity</a></span>
+    <h5><a asp-action="NewActivityPage"> Add New Activity </a><h5>
+
+</body>
+
+</html>

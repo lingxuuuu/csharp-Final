@@ -17,15 +17,15 @@ namespace BeltExam.Models
         [Display(Name = "Time")]
         public string Time { get; set; }
 
-        
+
         [DataType(DataType.Date)]
         [Display(Name = "Date")]
         public DateTime Date { get; set; }
 
         [DataType(DataType.Duration)]
         [Display(Name = "Duration")]
-        public string Duration { get; set; }
-        
+        public int Duration { get; set; }
+
         [DataType(DataType.MultilineText)]
         [Required(ErrorMessage = "Please provide this info to procced.")]
         [Display(Name = "Description")]
@@ -37,7 +37,7 @@ namespace BeltExam.Models
 
         //many to many, add after creating Middle Model
         //one activity have a list of participants
-        public List<Participant> Participants {get; set;}
+        public List<Participant> Participants { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 

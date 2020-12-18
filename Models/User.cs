@@ -26,7 +26,7 @@ namespace BeltExam.Models
 
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Please enter your password.")]
-        [MinLength(8, ErrorMessage = "Please enter a password of at least 8 charactors")]
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$",ErrorMessage="Password must be at least 8 digits long, contain at least 1 number, 1 letter, and a speical character")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
