@@ -26,6 +26,8 @@ namespace BeltExam.Models
         [Display(Name = "Duration")]
         public int Duration { get; set; }
 
+        public string StringTime {get;set;}
+
         [DataType(DataType.MultilineText)]
         [Required(ErrorMessage = "Please provide this info to procced.")]
         [Display(Name = "Description")]

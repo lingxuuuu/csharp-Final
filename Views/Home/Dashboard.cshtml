@@ -38,7 +38,7 @@
         <tr>
             <td><a asp-action="ActivityPage" asp-route-id="@activity.ActivityId">@activity.Title</a></td>
             <td>@activity.Date.ToString("MM/dd/yyyy") at @activity.Time</td>
-            <td>@activity.Duration</td>
+            <td>@activity.Duration @activity.StringTime</td>
             <td>@activity.PlanedBy.FirstName</td>
             <td>@activity.Participants.Count</td>
 
